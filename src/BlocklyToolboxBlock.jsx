@@ -19,21 +19,22 @@ var BlocklyToolboxBlock = React.createClass({
     })
   },
 
-  statics: {
-    renderBlock: function(block, key) {
-      return (
-        <BlocklyToolboxBlock
-          type={block.get('type')}
-          key={key}
-          fields={block.get('fields')}
-          values={block.get('values')}
-          statements={block.get('statements')}
-          mutation={block.get('mutation')}
-          shadow={block.get('shadow')}
-          next={block.get('next')} />
-      );
-    }
-  },
+	statics: {
+		renderBlock: function(block, key, shadow_defaultVal) {
+		    shadow_defaultVal = shadow_defaultVal === true ? true : undefined;
+			return (
+			<BlocklyToolboxBlock
+				type={block.get('type')}
+				key={key}
+				fields={block.get('fields')}
+				values={block.get('values')}
+				statements={block.get('statements')}
+				mutation={block.get('mutation')}
+				shadow={block.get('shadow') != null ? block.get('shadow') : shadow_defaultVal}
+				next={block.get('next')} />
+			);
+		}
+	},
 
   componentDidMount: function() {
     if (this.props.mutation) {
@@ -67,7 +68,7 @@ var BlocklyToolboxBlock = React.createClass({
       values = this.props.values.map(function(valueBlock, valueName, i) {
         return (
           <value name={valueName} key={"value_" + valueName + "_" + i}>
-            {BlocklyToolboxBlock.renderBlock(valueBlock)}
+            {BlocklyToolboxBlock.renderBlock(valueBlock, null, true)} // default "shadow" to true
           </value>
         );
       }.bind(this)).valueSeq();

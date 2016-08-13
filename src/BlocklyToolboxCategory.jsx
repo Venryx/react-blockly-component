@@ -9,6 +9,7 @@ var BlocklyToolboxCategory = React.createClass({
 
   propTypes: {
     name: React.PropTypes.string,
+	color: React.PropTypes.string,
     custom: React.PropTypes.string,
     categories: ImmutablePropTypes.list,
     blocks: ImmutablePropTypes.list
@@ -31,11 +32,13 @@ var BlocklyToolboxCategory = React.createClass({
     }
   },
 
-  componentDidMount: function() {
-    if (this.props.custom) {
-      ReactDOM.findDOMNode(this.refs.category).setAttribute('custom', this.props.custom);
-    }
-  },
+	componentDidMount: function() {
+	    var dom = ReactDOM.findDOMNode(this.refs.category);
+		if (this.props.custom)
+			dom.setAttribute('custom', this.props.custom);
+		if (this.props.color)
+			dom.setAttribute("colour", this.props.color);
+	},
 
   render: function() {
     var subcategories = (this.props.categories || []).map(BlocklyToolboxCategory.renderCategory);

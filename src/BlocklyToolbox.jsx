@@ -26,6 +26,7 @@ class BlocklyToolbox extends BaseComponent {
 				return <search key={"search_" + i}/>;
 			return <BlocklyToolboxCategory
 				name={category.get('name')}
+				color={category.get('color')}
 				custom={category.get('custom')}
 				key={"category_" + category.get('name') + "_" + i}
 				blocks={category.get('blocks')}
@@ -47,7 +48,7 @@ class BlocklyToolbox extends BaseComponent {
 	}
 	render() {
 		return (
-			<div>
+			<div className="simpleText">
 				<xml ref="toolboxData" style={{display: "none"}}>
 					{this.props.categories
 						? this.renderCategories(this.props.categories.map(this.processCategory))

@@ -38,7 +38,7 @@ class BlocklyWorkspace extends BaseComponent {
 			dummyToolboxContent = <category name="Dummy toolbox"/>;
 
 		return (
-			<div className={this.props.wrapperDivClassName}>
+			<div className={"simpleText " + this.props.wrapperDivClassName}>
 				<xml style={{display: "none"}} ref="dummyToolbox">
 					{dummyToolboxContent}
 				</xml>
@@ -67,20 +67,23 @@ class BlocklyWorkspace extends BaseComponent {
 			var newXML = Blockly.Xml.domToPrettyText(Blockly.Xml.workspaceToDom(this.state.workspace));
 			if (newXML == this.displayedXML)
 				return;
-
-			this.displayedXML = newXML;
-			var code = Blockly.CSharp.workspaceToCode(this.state.workspace);
-			this.props.parent.SetXMLAndCSCode_FromBlocks(newXML, code);
-		}));
+	        this.SetXMLAndCode(newXML, true);
+	    }));
 	}
-
 	importFromXML(xml) {
 	    this.state.workspace.clear();
 		Blockly.Xml.domToWorkspace(Blockly.Xml.textToDom(xml), this.state.workspace);
-
+		this.SetXMLAndCode(xml, false);
+	}
+	SetXMLAndCode(xml, xmlActuallyNew) {
 	    this.displayedXML = xml;
-		var code = Blockly.CSharp.workspaceToCode(this.state.workspace);
-		this.props.parent.SetCSCode(code);
+	    var jsCode = null;
+		//jsCode = Blockly.JavaScript.workspaceToCode(this.state.workspace);
+		var csCode = Blockly.CSharp.workspaceToCode(this.state.workspace);
+		if (xmlActuallyNew)
+			this.props.parent.SetXMLAndCode_FromBlocks(xml, jsCode, csCode);
+		else
+			this.props.parent.SetCode(jsCode, csCode);
 	}
 
 	componentWillReceiveProps(newProps) {
