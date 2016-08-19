@@ -56,6 +56,8 @@ class BlocklyWorkspace extends BaseComponent {
 			})
 		);
 
+	    $("body").children(".blocklyToolboxDiv").css("display", "none");
+
 	    /*if (this.props.parent.state.xml) {
 	        this.importFromXML(this.props.parent.state.xml);
 	        /*if (this.props.xmlDidChange)

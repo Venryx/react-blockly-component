@@ -61,7 +61,9 @@ class BlocklyToolbox extends BaseComponent {
 
 	componentDidMount() {
 		// custom
-		$("body").children(".blocklyToolboxDiv").appendTo($(ReactDOM.findDOMNode(this.refs.toolboxUIHolder)));
+	    var toolboxDiv = $("body").children(".blocklyToolboxDiv");		
+		toolboxDiv.appendTo($(ReactDOM.findDOMNode(this.refs.toolboxUIHolder)));
+		toolboxDiv.css("display", "");
 		WaitXThenRun(0, ()=>window.requestAnimationFrame(()=>this.PostRender()));
 	}
 	componentDidUpdate(prevProps, prevState) {
